@@ -7,6 +7,7 @@ import com.samara.mentoring.console.JlineConsole;
 public class Main {
     public static void main(String[] args) {
         final Console console = new JlineConsole();
+        console.setPrompt("> ");
         console.registerCommand("foo", new ConsoleCommand() {
             @Override public void perform(String params) {
                 console.println("foo command invoked");

@@ -66,7 +66,7 @@ public class JlineConsole implements Console {
                 if(commands.containsKey(alias)) {
                     commands.get(alias).perform(params);
                 } else {
-                    out.println(usage != null ? usage : "Unknown command");
+                    out.println(usage != null ? usage : "Unknown command, press TAB to list available ones");
                 }
             }
         } catch (UserInterruptException e) {
