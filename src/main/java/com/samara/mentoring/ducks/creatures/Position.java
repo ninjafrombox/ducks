@@ -1,19 +1,20 @@
-package com.samara.mentoring.ducks;
+package com.samara.mentoring.ducks.creatures;
 
+import com.samara.mentoring.ducks.Coordinate;
 
-public class Position implements Coordinate {
+class Position implements Coordinate {
     private int x;
     private int y;
 
-    public Position(Coordinate coordinate) {
+    Position(Coordinate coordinate) {
         change(coordinate.x(), coordinate.y());
     }
 
-    public Position(int x, int y) {
+    Position(int x, int y) {
         change(x, y);
     }
 
-    public void change(int x, int y) {
+    void change(int x, int y) {
         this.x = x;
         this.y = y;
     }

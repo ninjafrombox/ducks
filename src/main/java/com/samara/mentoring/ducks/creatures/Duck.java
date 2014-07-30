@@ -1,5 +1,9 @@
-package com.samara.mentoring.ducks;
+package com.samara.mentoring.ducks.creatures;
 
+import com.samara.mentoring.ducks.Coordinate;
+import com.samara.mentoring.ducks.Direction;
+import com.samara.mentoring.ducks.MovementType;
+import com.samara.mentoring.ducks.world.WorldMap;
 
 public class Duck {
     private final Position position;
@@ -19,8 +23,8 @@ public class Duck {
     }
 
     private void move(Direction direction, MovementType movementType) {
-        if(worldMap.canMove(position, movementType, direction)) {
-            Coordinate coordinate = worldMap.getNextCoordinate(position, direction);
+        Coordinate coordinate = worldMap.getNextCoordinate(position, direction);
+        if(coordinate != null && worldMap.canMove(coordinate, movementType)) {
             position.change(coordinate.x(), coordinate.y());
         }
     }
