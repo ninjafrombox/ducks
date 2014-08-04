@@ -1,8 +1,7 @@
 package com.samara.mentoring.console;
 
+import java.util.List;
+
 public interface ConsoleCommand {
-    /**
-     * Parse params and perform action
-     */
-    void perform(String params);
+    void perform(List<String> params);
 }

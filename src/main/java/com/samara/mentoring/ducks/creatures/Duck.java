@@ -3,6 +3,7 @@ package com.samara.mentoring.ducks.creatures;
 import com.samara.mentoring.ducks.Coordinate;
 import com.samara.mentoring.ducks.Direction;
 import com.samara.mentoring.ducks.MovementType;
+import com.samara.mentoring.ducks.world.Surface;
 import com.samara.mentoring.ducks.world.WorldMap;
 
 public class Duck {
@@ -31,5 +32,9 @@ public class Duck {
 
     public Coordinate getCoordinate() {
         return position;
+    }
+
+    public Surface getSurface() {
+        return worldMap.getSurface(position);
     }
 }

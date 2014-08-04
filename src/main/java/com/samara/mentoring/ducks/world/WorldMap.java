@@ -10,4 +10,8 @@ public interface WorldMap {
      */
     Coordinate getNextCoordinate(Coordinate from, Direction direction);
     boolean canMove(Coordinate to, MovementType movementType);
+    /**
+     * @return null if coordinate is out of the world
+     */
+    Surface getSurface(Coordinate coordinate);
 }

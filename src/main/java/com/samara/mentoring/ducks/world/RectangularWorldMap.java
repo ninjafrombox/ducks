@@ -34,7 +34,13 @@ public class RectangularWorldMap implements WorldMap {
 
     @Override
     public boolean canMove(Coordinate to, MovementType movementType) {
-        return isInsideWorld(to) && world[to.y()][to.x()].reachableBy(movementType);
+        Surface surface = getSurface(to);
+        return surface != null && surface.reachableBy(movementType);
+    }
+
+    @Override
+    public Surface getSurface(Coordinate coordinate) {
+        return isInsideWorld(coordinate) ? world[coordinate.y()][coordinate.x()] : null;
     }
 
     private boolean isInsideWorld(Coordinate coordinate) {

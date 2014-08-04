@@ -3,6 +3,7 @@ package com.samara.mentoring.console;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jline.console.ConsoleReader;
@@ -14,6 +15,7 @@ public class JlineConsole implements Console {
     private final ConsoleReader reader;
     private final StringsCompleter completer;
     private final PrintWriter out;
+    private final InputTokenizer tokenizer;
     private boolean isStarted = false;
     private String usage;
 
@@ -24,6 +26,7 @@ public class JlineConsole implements Console {
             completer = new StringsCompleter();
             reader.addCompleter(completer);
             out = new PrintWriter(reader.getOutput(), true);
+            tokenizer = new SimpleTokenizer("\\s+");
         } catch (IOException e) {
             throw new ConsoleException(e);
         }
@@ -59,12 +62,12 @@ public class JlineConsole implements Console {
         completer.getStrings().addAll(commands.keySet());
         String line;
         try {
-            while(isStarted && (line = reader.readLine().trim()) != null) {
-                int spacePos = line.indexOf(" ");
-                String alias = spacePos == -1 ? line : line.substring(0, spacePos);
-                String params = spacePos == -1 ? "" : line.substring(spacePos).trim();
-                if(commands.containsKey(alias)) {
-                    commands.get(alias).perform(params);
+            while(isStarted && (line = reader.readLine()) != null) {
+                List<String> tokens = tokenizer.tokenize(line);
+                String alias;
+                if(!tokens.isEmpty() && (alias = tokens.get(0)) != null && commands.containsKey(alias)) {
+                    tokens.remove(0);
+                    commands.get(alias).perform(tokens);
                 } else {
                     out.println(usage != null ? usage : "Unknown command, press TAB to list available ones");
                 }
