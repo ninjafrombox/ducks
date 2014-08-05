@@ -31,6 +31,13 @@ public class Main {
             @Override protected void badParamsMessage() {
                 console.println("'swim'" + CORE_MESSAGE);
             }});
+        console.registerCommand("fly", new MovementCommand() {
+            @Override protected void doMove(Direction direction) {
+                duck.fly(direction);
+            }
+            @Override protected void badParamsMessage() {
+                console.println("'fly'" + CORE_MESSAGE);
+            }});
         console.registerCommand("info", new ConsoleCommand() {
             @Override public void perform(List<String> params) {
                 Coordinate coordinate = duck.getCoordinate();

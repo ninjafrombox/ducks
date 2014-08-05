@@ -8,8 +8,8 @@ import java.util.Collection;
 import com.samara.mentoring.ducks.MovementType;
 
 public enum Surface {
-    LAND(WALK),
-    WATER(SWIM);
+    LAND(WALK, FLY),
+    WATER(SWIM, FLY);
 
     private final Collection<MovementType> reachableBy;
 

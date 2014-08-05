@@ -23,6 +23,10 @@ public class Duck {
         move(direction, MovementType.SWIM);
     }
 
+    public void fly(Direction direction) {
+        move(direction, MovementType.FLY);
+    }
+
     private void move(Direction direction, MovementType movementType) {
         Coordinate coordinate = worldMap.getNextCoordinate(position, direction);
         if(coordinate != null && worldMap.canMove(coordinate, movementType)) {
