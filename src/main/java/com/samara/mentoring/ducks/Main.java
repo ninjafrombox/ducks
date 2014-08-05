@@ -1,67 +1,24 @@
 package com.samara.mentoring.ducks;
 
-import java.util.List;
-import java.util.Random;
-
-import com.samara.mentoring.console.Console;
-import com.samara.mentoring.console.ConsoleCommand;
-import com.samara.mentoring.console.JlineConsole;
-import com.samara.mentoring.ducks.creatures.Duck;
-import com.samara.mentoring.ducks.world.RectangularWorldMap;
-import com.samara.mentoring.ducks.world.Surface;
+import com.samara.mentoring.ducks.clients.Day1;
+import com.samara.mentoring.ducks.clients.Day2;
 
 public class Main {
-    private static final String CORE_MESSAGE = " param can be one of the following: UP, DOWN, LEFT, RIGHT";
-
     public static void main(String[] args) {
-        final Duck duck = createDuck(10,5);
-        final Console console = new JlineConsole();
-        console.setPrompt("> ");
-        console.registerCommand("walk", new MovementCommand() {
-            @Override protected void doMove(Direction direction) {
-                duck.walk(direction);
+        try {
+            if(args.length == 0) throw new IllegalArgumentException();
+            switch (Integer.parseInt(args[0])) {
+            case 1:
+                Day1.createClient();
+                break;
+            case 2:
+                Day2.createClient();
+                break;
+            default:
+                throw new IllegalArgumentException();
             }
-            @Override protected void badParamsMessage() {
-                console.println("'walk'" + CORE_MESSAGE);
-            }});
-        console.registerCommand("swim", new MovementCommand() {
-            @Override protected void doMove(Direction direction) {
-                duck.swim(direction);
-            }
-            @Override protected void badParamsMessage() {
-                console.println("'swim'" + CORE_MESSAGE);
-            }});
-        console.registerCommand("fly", new MovementCommand() {
-            @Override protected void doMove(Direction direction) {
-                duck.fly(direction);
-            }
-            @Override protected void badParamsMessage() {
-                console.println("'fly'" + CORE_MESSAGE);
-            }});
-        console.registerCommand("info", new ConsoleCommand() {
-            @Override public void perform(List<String> params) {
-                Coordinate coordinate = duck.getCoordinate();
-                console.println("duck's coordinate is (" + coordinate.x() + ";" +
-                        coordinate.y() + ")");
-                console.println("current surface is " + duck.getSurface());
-            }});
-        console.registerCommand("exit", new ConsoleCommand() {
-            @Override public void perform(List<String> params) {
-                console.println("bye!");
-                console.stop();
-            }});
-        console.start();
-    }
-
-    private static Duck createDuck(int width, int height) {
-        Random rnd = new Random();
-        Coordinate coordinate = new SimpleCoordinate(rnd.nextInt(width), rnd.nextInt(height));
-        Surface[][] world = new Surface[height][width];
-        for(int i = 0; i < height; i++) {
-            for(int j = 0; j < width; j++) {
-                world[i][j] = rnd.nextBoolean() ? Surface.LAND : Surface.WATER;
-            }
+        } catch(IllegalArgumentException e) {
+          System.out.println("Number in range [1;2] is expected");
         }
-        return new Duck(coordinate, new RectangularWorldMap(world));
     }
 }
